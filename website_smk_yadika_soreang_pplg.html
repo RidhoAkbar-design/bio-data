@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPLG - SMK Yadika Soreang | Pengembangan Perangkat Lunak & Gim</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        yadika: {
+                            navy: '#0B192C',
+                            blue: '#1E3E62',
+                            cyan: '#00ADB5',
+                            gold: '#FFD700',
+                            goldHover: '#E6C200',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-dark {
+            background: rgba(11, 25, 44, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00ADB5 0%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(11, 25, 44, 0.92) 0%, rgba(30, 62, 98, 0.88) 100%), 
+                        url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-yadika-cyan selection:text-white">
+
+    <!-- NAVBAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-yadika-blue to-yadika-cyan flex items-center justify-center text-white font-heading font-extrabold text-xl shadow-lg shadow-yadika-cyan/20 group-hover:scale-105 transition-transform">
+                        Y
+                    </div>
+                    <div>
+                        <span class="font-heading font-bold text-lg md:text-xl text-white block leading-none">SMK YADIKA</span>
+                        <span class="text-xs text-yadika-gold font-medium tracking-wider">SOREANG • PPLG</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-1 xl:space-x-2">
+                    <a href="#home" class="px-3 py-2 text-sm font-medium text-white hover:text-yadika-gold transition-colors">Beranda</a>
+                    <a href="#profil" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Profil</a>
+                    <a href="#kompetensi" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Kurikulum</a>
+                    <a href="#fasilitas" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Fasilitas</a>
+                    <a href="#galeri" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Karya Siswa</a>
+                    <a href="#karir" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Karir</a>
+                    <a href="#ppdb" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">PPDB</a>
+                    <a href="#kontak" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-yadika-gold transition-colors">Kontak</a>
+                </div>
+
+                <!-- CTA Button Desktop -->
+                <div class="hidden lg:block">
+                    <button onclick="openModal()" class="bg-yadika-gold hover:bg-yadika-goldHover text-yadika-navy font-heading font-bold px-5 py-2.5 rounded-full shadow-lg shadow-yadika-gold/20 hover:shadow-yadika-gold/40 hover:-translate-y-0.5 transition-all duration-300 text-sm">
+                        Daftar PPDB <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden lg:hidden bg-yadika-navy/95 backdrop-blur-md rounded-2xl p-5 border border-white/10 mb-4 shadow-2xl transition-all">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="mobile-link text-white hover:text-yadika-gold font-medium py-2 border-b border-white/10">Beranda</a>
+                    <a href="#profil" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Profil Jurusan</a>
+                    <a href="#kompetensi" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Kurikulum & Keahlian</a>
+                    <a href="#fasilitas" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Fasilitas</a>
+                    <a href="#galeri" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Karya Siswa</a>
+                    <a href="#karir" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Peluang Karir</a>
+                    <a href="#ppdb" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2 border-b border-white/10">Alur PPDB</a>
+                    <a href="#kontak" class="mobile-link text-slate-200 hover:text-yadika-gold font-medium py-2">Kontak</a>
+                    <button onclick="openModal()" class="w-full mt-2 bg-yadika-gold hover:bg-yadika-goldHover text-yadika-navy font-bold py-3 rounded-xl shadow-lg text-center">
+                        Daftar PPDB Sekarang
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-bg min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Glow accents -->
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-yadika-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-yadika-gold/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-yadika-gold text-xs sm:text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yadika-cyan animate-ping"></span>
+                    Penerimaan Siswa Baru (PPDB) Telah Dibuka!
+                </div>
+                <h1 class="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+                    Jurusan PPLG <br class="hidden sm:inline"/>
+                    <span class="gradient-text">SMK Yadika Soreang</span>
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Mengembangkan Talenta Digital Masa Depan. Siap Menjadi Software Developer, Mobile App Specialist, dan Game Developer Profesional & Siap Kerja!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <button onclick="openModal()" class="bg-yadika-gold hover:bg-yadika-goldHover text-yadika-navy font-heading font-bold px-8 py-4 rounded-xl shadow-xl shadow-yadika-gold/20 hover:shadow-yadika-gold/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Daftar Sekarang
+                    </button>
+                    <a href="#profil" class="bg-white/10 hover:bg-white/20 text-white font-heading font-semibold px-8 py-4 rounded-xl border border-white/20 backdrop-blur-md hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-compass"></i> Jelajahi Jurusan
+                    </a>
+                </div>
+
+                <!-- Stats Badge -->
+                <div class="mt-12 grid grid-cols-3 gap-4 pt-8 border-t border-white/10 max-w-lg mx-auto lg:mx-0">
+                    <div>
+                        <p class="font-heading text-2xl sm:text-3xl font-bold text-yadika-cyan">100%</p>
+                        <p class="text-xs text-slate-400">Kurikulum Industri</p>
+                    </div>
+                    <div>
+                        <p class="font-heading text-2xl sm:text-3xl font-bold text-yadika-gold">5+</p>
+                        <p class="text-xs text-slate-400">Lab Komputer Modern</p>
+                    </div>
+                    <div>
+                        <p class="font-heading text-2xl sm:text-3xl font-bold text-white">95%</p>
+                        <p class="text-xs text-slate-400">Lulusan Kerja/Kuliah</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Code / Visual Box -->
+            <div class="lg:col-span-5">
+                <div class="glass-dark rounded-2xl p-6 shadow-2xl border border-white/10 relative">
+                    <!-- Terminal Header -->
+                    <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">pplg-yadika.js</span>
+                    </div>
+                    <!-- Terminal Code Simulation -->
+                    <div class="font-mono text-xs sm:text-sm space-y-2 text-slate-300 overflow-x-auto">
+                        <p class="text-purple-400">const <span class="text-yadika-cyan">student</span> = {</p>
+                        <p class="pl-4">name: <span class="text-yadika-gold">'Siswa PPLG Yadika'</span>,</p>
+                        <p class="pl-4">skills: [<span class="text-green-400">'Web'</span>, <span class="text-green-400">'Mobile App'</span>, <span class="text-green-400">'Game Dev'</span>],</p>
+                        <p class="pl-4">status: <span class="text-yadika-gold">'Ready for Tech Industry 🚀'</span></p>
+                        <p class="text-purple-400">};</p>
+                        <p class="pt-2 text-slate-500">// Program Misi Utama</p>
+                        <p class="text-blue-400">function <span class="text-yellow-300">buildFuture</span>() {</p>
+                        <p class="pl-4 text-emerald-400">return <span class="text-white">student.skills.map(skill => CreateAwesomeProject(skill));</span></p>
+                        <p class="text-blue-400">}</p>
+                        <p class="text-yadika-cyan pt-2">console.log(buildFuture());</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFIL JURUSAN SECTION -->
+    <section id="profil" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Tentang Jurusan</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-yadika-navy mt-2">Profil PPLG SMK Yadika Soreang</h2>
+                <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="space-y-6">
+                    <h3 class="font-heading text-2xl font-bold text-yadika-navy">
+                        Apa itu PPLG?
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        <strong class="text-yadika-blue">Pengembangan Perangkat Lunak dan Gim (PPLG)</strong> merupakan konsentrasi keahlian modern yang mempelajari cara merancang, membuat, dan memelihara aplikasi web, aplikasi mobile, software desktop, serta game interaktif.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed">
+                        Di SMK Yadika Soreang, program PPLG dirancang berbasis kebutuhan industri era Digital 4.0. Siswa tidak hanya diajarkan koding, tetapi juga pemecahan masalah, kreativitas desain UI/UX, dan kerjasama tim.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <div class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <i class="fa-solid fa-laptop-code text-2xl text-yadika-cyan mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-yadika-navy">Koding & Logika</h4>
+                                <p class="text-xs text-slate-500">Menguasai bahasa pemrograman populer.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <i class="fa-solid fa-gamepad text-2xl text-yadika-gold mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-yadika-navy">Game Design</h4>
+                                <p class="text-xs text-slate-500">Mengembangkan game 2D & 3D interaktif.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Siswa PPLG SMK Yadika Soreang" class="rounded-2xl shadow-2xl w-full object-cover h-[400px]">
+                    <div class="absolute -bottom-6 -left-6 bg-yadika-navy text-white p-6 rounded-2xl shadow-xl hidden sm:block max-w-xs">
+                        <p class="font-heading font-bold text-yadika-gold text-lg">Keunggulan Yadika</p>
+                        <p class="text-xs text-slate-300 mt-1">Praktek langsung berorientasi proyek nyata (Project-Based Learning) sejak kelas awal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISI & MISI -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Visi -->
+                <div class="bg-gradient-to-br from-yadika-navy to-yadika-blue text-white rounded-2xl p-8 shadow-xl">
+                    <div class="w-12 h-12 rounded-xl bg-yadika-cyan/20 flex items-center justify-center text-yadika-cyan text-2xl mb-4">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold mb-4">Visi Jurusan</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        "Menjadi pusat pendidikan keahlian PPLG unggulan di Jawa Barat yang menghasilkan lulusan berkarakter, berkompeten tinggi di bidang Software & Game Development, serta siap bersaing secara global."
+                    </p>
+                </div>
+
+                <!-- Misi -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-yadika-gold/20 flex items-center justify-center text-yadika-gold text-2xl mb-4">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-yadika-navy mb-4">Misi Utama</h3>
+                    <ul class="space-y-3 text-slate-600 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-yadika-cyan mt-1"></i>
+                            <span>Menyelenggarakan kurikulum terkini sesuai perkembangan teknologi industri IT.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-yadika-cyan mt-1"></i>
+                            <span>Memfasilitasi siswa dengan sarana laboratorium berstandar industri.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-yadika-cyan mt-1"></i>
+                            <span>Membangun sertifikasi keahlian siswa berstandar nasional dan internasional.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KOMPETENSI & MATERI KEAHLIAN -->
+    <section id="kompetensi" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Materi Pembelajaran</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-yadika-navy mt-2">Kompetensi Keahlian PPLG</h2>
+                <p class="text-slate-600 mt-3">Materi komprehensif yang dirancang untuk membekali siswa dengan skill yang paling dicari oleh perusahaan IT saat ini.</p>
+                <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-yadika-blue flex items-center justify-center text-2xl mb-6 group-hover:bg-yadika-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">Pemrograman Web</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Pengembangan website modern frontend & backend menggunakan HTML5, CSS3, JavaScript, Tailwind CSS, React, dan Node.js / PHP Framework.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">HTML/CSS</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">JavaScript</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Laravel/React</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">Pemrograman Mobile</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Membuat aplikasi smartphone Android & iOS menggunakan Kotlin, Flutter, atau React Native dengan integrasi API secara realtime.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Android Studio</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Flutter</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">REST API</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">Pemrograman Berbasis Objek</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Konsep Object-Oriented Programming (OOP) yang kokoh menggunakan bahasa Java, C#, dan Python untuk logika sistem yang terstruktur.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Java</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">C#</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Python</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">Pengembangan Gim (Game Dev)</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Merancang mekanisme, karakter, sprite, audio, serta koding logika game 2D dan 3D menggunakan Unity Engine atau Construct.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Unity 3D</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Construct 3</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Game Logic</span>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-yadika-cyan flex items-center justify-center text-2xl mb-6 group-hover:bg-yadika-cyan group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">Basis Data (Database)</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Perancangan dan pengelolaan struktur data efisien menggunakan Relational Database (MySQL, PostgreSQL) dan NoSQL (MongoDB).
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">MySQL</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">PostgreSQL</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Database Design</span>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/60 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-yadika-navy mb-3">UI/UX & Software Design</h3>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Merancang antarmuka pengguna yang estetis dan ramah pengguna dengan Figma, wireframing, prototyping, dan metode SDLC.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Figma</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Prototyping</span>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">Agile/Scrum</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FASILITAS JURUSAN -->
+    <section id="fasilitas" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Sarana Prasarana</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-yadika-navy mt-2">Fasilitas Unggulan PPLG</h2>
+                <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Lab Komputer Modern" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Lab Komputer High-Spec</h3>
+                        <p class="text-slate-600 text-sm">Dilengkapi PC dengan spesifikasi tinggi untuk pemrograman cepat, rendering game 3D, dan kompilasi software berat.</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600&q=80" alt="Akses Internet Cepat" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Akses Internet High-Speed</h3>
+                        <p class="text-slate-600 text-sm">Jaringan WiFi dedicated berkecepatan tinggi untuk riset, unduhan package/library koding, serta pembelajaran online.</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Ruangan Ber-AC" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Ruang Lab Ber-AC Nyaman</h3>
+                        <p class="text-slate-600 text-sm">Suasana belajar yang kondusif, bersih, dan ber-AC untuk mendukung kenyamanan eksplorasi koding berjam-jam.</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Software Berlisensi" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Software & IDE Berlisensi</h3>
+                        <p class="text-slate-600 text-sm">Mendukung penggunaan perangkat lunak resmi seperti JetBrains, Visual Studio, Adobe Suite, dan Unity Engine.</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Studio Game Dev" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Studio Game & App Dev</h3>
+                        <p class="text-slate-600 text-sm">Ruang diskusi kreatif berbasis tim untuk merancang project karya siswa, pameran game, dan simulasi startup.</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="Smart Interactive Screen" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl text-yadika-navy mb-2">Interactive Smart Screen</h3>
+                        <p class="text-slate-600 text-sm">Layar presentasi interaktif di lab untuk kemudahan guru menjelaskan alur logika algoritma dan live coding.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI / KARYA SISWA SHOWCASE (FILTERABLE) -->
+    <section id="galeri" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Showcase Project</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-2">Karya & Proyek Siswa PPLG</h2>
+                <p class="text-slate-400 mt-2">Hasil karya nyata ciptaan siswa-siswi SMK Yadika Soreang dalam pembelajaran berbasis proyek.</p>
+                <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="gallery-filters">
+                <button data-filter="all" class="filter-btn active bg-yadika-cyan text-white px-5 py-2 rounded-full font-medium text-sm transition-all">Semua Karya</button>
+                <button data-filter="web" class="filter-btn bg-white/10 hover:bg-white/20 text-slate-300 px-5 py-2 rounded-full font-medium text-sm transition-all">Aplikasi Web</button>
+                <button data-filter="mobile" class="filter-btn bg-white/10 hover:bg-white/20 text-slate-300 px-5 py-2 rounded-full font-medium text-sm transition-all">App Mobile</button>
+                <button data-filter="game" class="filter-btn bg-white/10 hover:bg-white/20 text-slate-300 px-5 py-2 rounded-full font-medium text-sm transition-all">Game 2D/3D</button>
+                <button data-filter="uiux" class="filter-btn bg-white/10 hover:bg-white/20 text-slate-300 px-5 py-2 rounded-full font-medium text-sm transition-all">UI/UX Design</button>
+            </div>
+
+            <!-- Grid Items -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
+                <!-- Item 1 Web -->
+                <div class="gallery-item web glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Web Portal Sekolah" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-yadika-blue text-xs font-semibold px-3 py-1 rounded-full text-white">Web App</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Portal Perpustakaan Digital</h3>
+                        <p class="text-slate-400 text-sm mb-4">Sistem peminjaman buku berbasis web dengan fitur QR Code reader dan manajemen stok.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Kelas XI PPLG</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 Game -->
+                <div class="gallery-item game glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="Game Adventure 2D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-amber-600 text-xs font-semibold px-3 py-1 rounded-full text-white">Game Dev</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Soreang Quest: 2D Platformer</h3>
+                        <p class="text-slate-400 text-sm mb-4">Game petualangan edukatif dengan mekanik teka-teki dan grafis pixel art menarik di Unity Engine.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Tim Tim-PPLG 12</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 Mobile -->
+                <div class="gallery-item mobile glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80" alt="Mobile School App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-emerald-600 text-xs font-semibold px-3 py-1 rounded-full text-white">Mobile App</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Yadika Attendance App</h3>
+                        <p class="text-slate-400 text-sm mb-4">Aplikasi presensi kehadiran berbasis Android lokasi GPS & face detection sederhana.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Rizky & Team (XII PPLG)</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 UIUX -->
+                <div class="gallery-item uiux glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&q=80" alt="UI UX Redesign" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-rose-600 text-xs font-semibold px-3 py-1 rounded-full text-white">UI/UX Design</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Redesign App E-Commerce Usaha Lokal</h3>
+                        <p class="text-slate-400 text-sm mb-4">Prototype UI/UX aplikasi belanja produk UMKM Soreang menggunakan Figma.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Anisa (XI PPLG)</span>
+                    </div>
+                </div>
+
+                <!-- Item 5 Web -->
+                <div class="gallery-item web glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Web E-Learning" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-yadika-blue text-xs font-semibold px-3 py-1 rounded-full text-white">Web App</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Platform E-Learning Koding</h3>
+                        <p class="text-slate-400 text-sm mb-4">Website pembelajaran koding interaktif untuk pemula dengan fitur tes langsung di browser.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Kelompok Web Dev</span>
+                    </div>
+                </div>
+
+                <!-- Item 6 Game -->
+                <div class="gallery-item game glass-dark rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" alt="Game 3D Space Shooter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-amber-600 text-xs font-semibold px-3 py-1 rounded-full text-white">Game Dev</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-lg text-white mb-2">Space Guardian 3D</h3>
+                        <p class="text-slate-400 text-sm mb-4">Game pertempuran luar angkasa 3D dengan efek visual particle dan efek suara sinematik.</p>
+                        <span class="text-xs text-yadika-gold font-mono">Dibuat oleh: Budi (XII PPLG)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PELUANG KARIR / PROSPEK KERJA -->
+    <section id="karir" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Masa Depan Cerah</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-yadika-navy mt-2">Peluang Karir Lulusan PPLG</h2>
+                <p class="text-slate-600 mt-2">Prospek kerja luas di industri digital nasional maupun internasional dengan standar gaji menarik.</p>
+                <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-yadika-blue flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">Software Engineer</h3>
+                    <p class="text-slate-600 text-sm">Merancang dan membangun arsitektur perangkat lunak untuk kebutuhan perusahaan dan sistem bisnis.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-100 text-yadika-cyan flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">Web Developer</h3>
+                    <p class="text-slate-600 text-sm">Mengembangkan situs web interaktif baik dari sisi tampilan (Frontend) maupun sistem backend data.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-mobile-button"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">Mobile App Developer</h3>
+                    <p class="text-slate-600 text-sm">Spesialis pembuat aplikasi smartphone Android & iOS yang digunakan oleh jutaan pengguna.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">Game Developer</h3>
+                    <p class="text-slate-600 text-sm">Merancang ide, gameplay, logika koding, hingga publikasi game di Google Play Store atau Steam.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">Database Administrator</h3>
+                    <p class="text-slate-600 text-sm">Mengelola keamanan, kecepatan, dan integritas data pada server instansi atau perusahaan.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-yadika-cyan transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-yadika-navy mb-2">UI/UX Designer</h3>
+                    <p class="text-slate-600 text-sm">Merancang pengalaman pengguna dan tampilan visual aplikasi agar nyaman dan mudah digunakan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI & ALUR PPDB -->
+    <section id="ppdb" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- ALUR PPDB -->
+            <div class="mb-20">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-yadika-cyan font-semibold text-sm uppercase tracking-widest">Informasi Pendaftaran</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-yadika-navy mt-2">Alur Pendaftaran PPDB Online</h2>
+                    <p class="text-slate-600 mt-2">4 Langkah mudah bergabung dengan Jurusan PPLG SMK Yadika Soreang</p>
+                    <div class="w-20 h-1 bg-yadika-gold mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center relative">
+                        <div class="w-10 h-10 rounded-full bg-yadika-navy text-yadika-gold font-bold flex items-center justify-center mx-auto mb-4">1</div>
+                        <h3 class="font-heading font-bold text-yadika-navy mb-2">Isi Form Online</h3>
+                        <p class="text-xs text-slate-600">Klik tombol "Daftar PPDB" dan lengkapi formulir pendaftaran calon siswa.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center relative">
+                        <div class="w-10 h-10 rounded-full bg-yadika-navy text-yadika-gold font-bold flex items-center justify-center mx-auto mb-4">2</div>
+                        <h3 class="font-heading font-bold text-yadika-navy mb-2">Verifikasi Berkas</h3>
+                        <p class="text-xs text-slate-600">Panitia PPDB memverifikasi kelengkapan berkas dan rapor SMP/MTs.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center relative">
+                        <div class="w-10 h-10 rounded-full bg-yadika-navy text-yadika-gold font-bold flex items-center justify-center mx-auto mb-4">3</div>
+                        <h3 class="font-heading font-bold text-yadika-navy mb-2">Tes Minat & Bakat</h3>
+                        <p class="text-xs text-slate-600">Mengikuti wawancara dan tes kemampuan dasar logika/komputer.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center relative">
+                        <div class="w-10 h-10 rounded-full bg-yadika-navy text-yadika-gold font-bold flex items-center justify-center mx-auto mb-4">4</div>
+                        <h3 class="font-heading font-bold text-yadika-navy mb-2">Daftar Ulang</h3>
+                        <p class="text-xs text-slate-600">Pengumuman kelulusan dan registrasi ulang sebagai siswa resmi PPLG.</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <button onclick="openModal()" class="bg-yadika-gold hover:bg-yadika-goldHover text-yadika-navy font-heading font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all">
+                        Isi Formulir Pendaftaran Sekarang
+                    </button>
+                </div>
+            </div>
+
+            <!-- TESTIMONI -->
+            <div>
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="font-heading text-2xl sm:text-3xl font-bold text-yadika-navy">Apa Kata Alumni & Siswa?</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200 relative">
+                        <i class="fa-solid fa-quote-right text-4xl text-slate-200 absolute top-6 right-6"></i>
+                        <p class="text-slate-600 italic mb-6 leading-relaxed">
+                            "Belajar PPLG di SMK Yadika Soreang sangat menyenangkan! Gurunya ramah dan praktek koding langsung bikin aplikasi. Begitu lulus saya langsung diterima kerja sebagai Jr. Web Developer."
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-yadika-cyan text-white flex items-center justify-center font-bold">FA</div>
+                            <div>
+                                <h4 class="font-heading font-bold text-yadika-navy">Fajar Agus</h4>
+                                <p class="text-xs text-slate-500">Alumni PPLG - Front-end Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200 relative">
+                        <i class="fa-solid fa-quote-right text-4xl text-slate-200 absolute top-6 right-6"></i>
+                        <p class="text-slate-600 italic mb-6 leading-relaxed">
+                            "Fasilitas lab komputernya lengkap banget dan AC-nya dingin. Pembelajaran Game Dev membuat kami bisa merilis game buatan sendiri ke Playstore waktu kelas 12!"
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-yadika-gold text-yadika-navy flex items-center justify-center font-bold">NS</div>
+                            <div>
+                                <h4 class="font-heading font-bold text-yadika-navy">Nabila Sifa</h4>
+                                <p class="text-xs text-slate-500">Siswa Kelas XII PPLG</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER / KONTAK -->
+    <footer id="kontak" class="bg-yadika-navy text-white pt-16 pb-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Info Sekolah -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-yadika-cyan flex items-center justify-center text-white font-heading font-bold text-lg">Y</div>
+                        <span class="font-heading font-bold text-lg">SMK YADIKA SOREANG</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Menciptakan generasi ahli perangkat lunak dan gim yang inovatif, berkarakter, serta siap kerja di era industri digital.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-yadika-cyan transition-colors text-sm"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-yadika-cyan transition-colors text-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-yadika-cyan transition-colors text-sm"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-yadika-cyan transition-colors text-sm"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <!-- Menu Navigasi -->
+                <div>
+                    <h4 class="font-heading font-bold text-yadika-gold text-base mb-4">Navigasi Cepat</h4>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li><a href="#home" class="hover:text-yadika-cyan transition-colors">Beranda</a></li>
+                        <li><a href="#profil" class="hover:text-yadika-cyan transition-colors">Profil Jurusan PPLG</a></li>
+                        <li><a href="#kompetensi" class="hover:text-yadika-cyan transition-colors">Kurikulum & Materi</a></li>
+                        <li><a href="#fasilitas" class="hover:text-yadika-cyan transition-colors">Fasilitas Lab</a></li>
+                        <li><a href="#galeri" class="hover:text-yadika-cyan transition-colors">Showcase Karya Siswa</a></li>
+                    </ul>
+                </div>
+
+                <!-- Program Keahlian -->
+                <div>
+                    <h4 class="font-heading font-bold text-yadika-gold text-base mb-4">Materi PPLG</h4>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>Pemrograman Web & Mobile</li>
+                        <li>Pengembangan Game 2D & 3D</li>
+                        <li>UI/UX Design & Prototyping</li>
+                        <li>Pemrograman Objek (Java/C#)</li>
+                        <li>Pengelolaan Database MySQL</li>
+                    </ul>
+                </div>
+
+                <!-- Kontak -->
+                <div>
+                    <h4 class="font-heading font-bold text-yadika-gold text-base mb-4">Kontak & Alamat</h4>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-yadika-cyan mt-1"></i>
+                            <span>Jl. Raya Soreang - Ciwidey, Soreang, Kabupaten Bandung, Jawa Barat</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-yadika-cyan"></i>
+                            <span>info@smkyadikasoreang.sch.id</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-yadika-cyan"></i>
+                            <span>(022) 1234-5678 / +62 812-3456-7890</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="border-t border-white/10 pt-6 text-center text-xs text-slate-400">
+                <p>&copy; 2026 SMK Yadika Soreang - Jurusan PPLG. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP SIMULASI PPDB -->
+    <div id="ppdb-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-xl bg-yadika-gold/20 text-yadika-blue flex items-center justify-center mx-auto mb-3 text-2xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 class="font-heading font-bold text-2xl text-yadika-navy">Formulir PPDB Online</h3>
+                <p class="text-xs text-slate-500 mt-1">Daftar Jurusan PPLG SMK Yadika Soreang</p>
+            </div>
+
+            <form id="ppdb-form" onsubmit="handlePPDBSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Lengkap Siswa</label>
+                    <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-yadika-cyan">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Asal Sekolah (SMP/MTs)</label>
+                        <input type="text" required placeholder="SMP Negeri 1 Soreang" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-yadika-cyan">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nomor WhatsApp</label>
+                        <input type="tel" required placeholder="08123456789" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-yadika-cyan">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Pilihan Peminatan PPLG</label>
+                    <select class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-yadika-cyan">
+                        <option>Pengembangan Web & Aplikasi Mobile</option>
+                        <option>Pengembangan Gim (Game Development)</option>
+                        <option>UI/UX & Rekayasa Perangkat Lunak</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Alamat Rumah</label>
+                    <textarea rows="2" required placeholder="Jl. Raya Soreang No..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-yadika-cyan"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-yadika-blue hover:bg-yadika-navy text-white font-heading font-bold py-3 rounded-xl shadow-lg transition-all text-sm mt-2">
+                    Kirim Pendaftaran
+                </button>
+            </form>
+
+            <div id="ppdb-success" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="font-heading font-bold text-xl text-yadika-navy">Pendaftaran Berhasil!</h4>
+                <p class="text-sm text-slate-600">Terima kasih telah mendaftar di Jurusan PPLG SMK Yadika Soreang. Tim panitia PPDB kami akan menghubungi Anda melalui WhatsApp.</p>
+                <button onclick="closeModal()" class="bg-slate-200 text-slate-700 px-6 py-2 rounded-xl text-sm font-semibold hover:bg-slate-300">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Navbar scroll behavior
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-yadika-navy/95', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-yadika-navy/95', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Modal Functions
+        function openModal() {
+            document.getElementById('ppdb-modal').classList.remove('hidden');
+            document.getElementById('ppdb-form').classList.remove('hidden');
+            document.getElementById('ppdb-success').classList.add('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('ppdb-modal').classList.add('hidden');
+        }
+
+        function handlePPDBSubmit(event) {
+            event.preventDefault();
+            document.getElementById('ppdb-form').classList.add('hidden');
+            document.getElementById('ppdb-success').classList.remove('hidden');
+        }
+
+        // Gallery Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-yadika-cyan', 'text-white');
+                    b.classList.add('bg-white/10', 'text-slate-300');
+                });
+
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-yadika-cyan', 'text-white');
+                btn.classList.remove('bg-white/10', 'text-slate-300');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

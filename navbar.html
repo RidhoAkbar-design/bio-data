@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Navbar - Jurusan PPLG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            min-height: 70px;
+            background-color: #38bdf8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 40px;
+            box-shadow: 0 4px 6px -1px rgba(56, 189, 248, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .menu {
+            padding: 10px 20px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .menu:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .btnNav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btnNav button {
+            width: 90px;
+            height: 38px;
+            border: none;
+            border-radius: 20px;
+            background-color: white;
+            color: #0284c7;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s, color 0.3s;
+        }
+
+        .btnNav button:hover {
+            background-color: #0284c7;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 92%;
+            max-width: 1200px;
+            min-height: 400px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            margin: 30px auto;
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 46px);
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(15, 23, 42, 0.3);
+            line-height: 1.25;
+            margin-bottom: 30px;
+        }
+
+        .hero-1 {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .kelas {
+            padding: 0 25px;
+            height: 46px;
+            background-color: white;
+            color: #0284c7;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s, color 0.3s;
+        }
+
+        .kelas:hover {
+            background-color: #0f172a;
+            color: white;
+            cursor: pointer; 
+            transform: scale(1.05);
+        }
+
+        .search-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-1 input {
+            width: 220px;
+            height: 46px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            padding-left: 20px;
+            padding-right: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .cari {
+            padding: 0 25px;
+            height: 46px;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            background-color: #0f172a;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s;
+        }
+
+        .cari:hover {
+            background-color: #334155;
+            transform: scale(1.02);
+        }
+
+        /* Section Card Kelas */
+        .card-kelas-container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: #0284c7;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .card-kelas {
+            width: 100%;
+            background-color: #38bdf8;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 35px;
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.3);
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(2, 132, 199, 0.3);
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #cbd5e1;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .card-content h3 {
+            text-align: center;
+            font-size: 22px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .pengertian {
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #f0f9ff;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: justify;
+        }
+
+        .btnLihat {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            background-color: white;
+            color: #0284c7;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btnLihat:hover {
+            background-color: #0f172a;
+            color: white;
+        }
+
+        /* Gallery Section */
+        .box-gallery {
+            width: 92%;
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            background-color: #38bdf8;
+            border-radius: 24px 24px 0 0;
+            padding: 40px 30px 60px 30px;
+            box-shadow: 0 -5px 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .text-gallery {
+            width: 100%;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px; 
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.15);
+        }
+
+        .box-photo {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            perspective: 1000px;
+        }
+
+        .photo {
+            height: 200px;
+            background-color: #cbd5e1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo:hover {
+            transform: rotateY(180deg) scale(1.03);
+        }
+
+        /* Footer */
+        .footer {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            background-color: #0284c7;
+            border-radius: 0 0 24px 24px;
+            text-align: center;
+            padding: 30px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.3);
+        }
+
+        .footer h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .footer h3 {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .footer h4 {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.75;
+            margin-top: 5px;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                justify-content: center;
+            }
+            .btnNav {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero {
+                padding: 25px;
+            }
+            .hero-1 input {
+                width: 140px;
+            }
+            .box-photo {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .photo {
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="menu-container">
+            <div class="menu">Home</div>
+            <div class="menu">About</div>
+            <div class="menu">Product</div>
+            <div class="menu">Contact</div>
+        </div>
+        <div class="btnNav">
+            <button>Login</button>
+            <button>Daftar</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Selamat Datang di <br>Website Jurusan<br>Pengembangan Perangkat<br>Lunak dan Gim</h1>
+        <div class="hero-1">
+            <button class="kelas">Lihat kelas</button>
+            <div class="search-group">
+                <input type="text" name="text" placeholder="Cari...">
+                <button class="cari">Cari</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Card Kelas -->
+    <div class="card-kelas-container">
+        <div class="card-kelas">
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Cyber Security">
+                </div>
+                <div class="card-content">
+                    <h3>Cyber Security</h3>
+                    <p class="pengertian">Cybersecurity adalah bidang yang mempelajari cara melindungi komputer, jaringan, dan data dari serangan atau akses yang tidak sah.</p>
+                </div>
+                <button class="btnLihat">Lihat Selengkapnya</button>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80" alt="Mobile Development">
+                </div>
+                <div class="card-content">
+                    <h3>Mobile Development</h3>
+                    <p class="pengertian">Mobile App Development adalah bidang yang berfokus pada pembuatan aplikasi untuk perangkat mobile seperti smartphone dan tablet.</p>
+                </div>
+                <button class="btnLihat">Lihat Selengkapnya</button>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="Web Development">
+                </div>
+                <div class="card-content">
+                    <h3>Web Development</h3>
+                    <p class="pengertian">Web Developer adalah seseorang yang bertugas membuat, mengembangkan, dan memelihara website agar dapat digunakan dengan baik oleh pengguna.</p>
+                </div>
+                <button class="btnLihat">Lihat Selengkapnya</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="box-gallery">
+        <div class="text-gallery">
+            <h2>GALLERY</h2>
+        </div>
+        <div class="box-photo">
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=400&q=80" alt="Galeri 1">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" alt="Galeri 2">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" alt="Galeri 3">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" alt="Galeri 4">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" alt="Galeri 5">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Galeri 6">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400&q=80" alt="Galeri 7">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Galeri 8">
+            </div>
+            <div class="photo">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80" alt="Galeri 9">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2>Ridho Akbar Sumartin</h2>
+        <h3>X PPLG 2</h3>
+        <h4>&copy; 2026 Jurusan PPLG. All Rights Reserved.</h4>      
+    </div>
+
+</body>
+</html>
